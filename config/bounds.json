@@ -1,0 +1,4 @@
+{"Npix_oversat_cnt_rate": {"high_threshold": 10, "high_limit": 10},
+  "Npix_undersat_cnt_rate": {"low_threshold": 10, "low_limit": 10},
+  "pix_sat_cnt_rate": {"target": 400000, "low_limit": 5000, "high_limit": 500000},
+  "intensity_rate":{"target": 100000, "low_threshold":50000, "low_limit": 30000, "high_threshold":150000, "high_limit": 200000}}

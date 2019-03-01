@@ -1,0 +1,11 @@
+'bounds' = config/bounds.json
+'checks' = config/checks.json
+'pvs' = config/pvs.json
+
+'time_zone' = 'America/Chicago'
+
+'feed' = pv
+'detector' = S12-PILATUS1
+
+'adjust_time' = 5
+

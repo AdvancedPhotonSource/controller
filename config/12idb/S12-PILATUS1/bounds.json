@@ -1,0 +1,2 @@
+{"Npix_sat_cnt_rate": {"high_threshold":5, "high_limit": 10}, "pix_sat_cnt_rate": {"high_limit": 500000},
+  "test":{"high_threshold":50, "high_limit": 100}, "low_threshold":20, "low_limit": 5}}
