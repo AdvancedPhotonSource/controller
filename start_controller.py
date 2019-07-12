@@ -8,7 +8,7 @@ from configobj import ConfigObj
 import controller.response.responder as resp
 import controller.monitoring.monitor as mon
 import controller.feeds.pv_feed as pvf
-import controller.feeds.pva_feed as pvaf
+#import controller.feeds.pva_feed as pvaf
 
 
 __author__ = "Barbara Frosik"
@@ -43,9 +43,8 @@ def control(conf):
             assert 'pvs' in config
             assert 'feed' in config
             assert 'detector' in config
-            assert 'callback_pv_name' in config
         except:
-            print("configuration file must have defined following parameters: 'bounds','checks','pvs','feed','detector','callback_pv_name'")
+            print("configuration file must have defined following parameters: 'bounds','checks','pvs','feed','detector'")
             return
     else:
         print ('configuration file ' + conf + ' not found')
@@ -57,10 +56,10 @@ def control(conf):
     monitor.register(cntl)
 
     if config['feed'] == 'pv':
-        feed = pvf.FeedMonitor(config, monitor)
+        feed = pvf.Feed(config, monitor)
     elif config['feed'] == 'pva':
         feed = pvaf.Feed(config, monitor)
 
     feed.feed_data()
 
-control('../config/cntl_conf')
+control('config/cntl_conf')

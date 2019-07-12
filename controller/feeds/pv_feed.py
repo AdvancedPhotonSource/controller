@@ -97,6 +97,7 @@ class Feed(object):
             try:
                 callback_item = self.eventq.get(timeout=1)
                 if callback_item == 'finish':
+                    print ('done')
                     self.done = True
                 else:
                     current_ctr = callback_item
@@ -105,13 +106,16 @@ class Feed(object):
                     self.current_counter = current_ctr + 1
 
                     try:
+                        print ('current cntr', self.current_counter)
                         pv_pairs = {}
                         slice = np.array(caget(self.get_data_pv_name()))
+                        print ('pvname', self.get_data_pv_name())
                         # read other pvs
                         for pv in self.pvs:
                             pv_pairs[pv] = (self.pvs[pv], caget(self.pvs[pv]))
+                        print ('pv pairs', pv_pairs)
                         if slice is None:
-                            done = True
+                            self.done = True
                             self.event('reading image times out, possibly the detector exposure time is too small')
                         else:
                             slice.resize(self.sizex, self.sizey)
@@ -240,6 +244,10 @@ class Feed(object):
             else:
                 time.sleep(.005)
 
+        # # start the infinit loop so the feed does not stop after this init
+        # if True:
+        #     time.sleep(10)
+        #
         return caget(acquire_pv_name)
 
 

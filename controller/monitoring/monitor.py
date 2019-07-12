@@ -27,7 +27,7 @@ class Monitor(Observable):
         All events returned by the checks are passed with notify function to the observer.
         """
         events = checks.run_quality_checks(data, self.checks, self.bounds)
-
+        print ('events',events)
         if events is not None:
             # if event is detected, call notify
             self.notify(events)

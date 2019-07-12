@@ -12,10 +12,10 @@ class Observable(object):
         self.observer = observer
 
     def notify(self, *args, **kwargs):
-        t = threading.Thread(target=self.observer.update)
+        t = threading.Thread(target=self.observer.update, args=(args, kwargs))
         print('staring thread t ' + t.name)
         t.start()
-        #self.observer.update(*args, **kwargs)
+#        self.observer.update(args, kwargs)
 
 
 class Observer(object):
@@ -30,7 +30,7 @@ class Data(object):
     """
     This class is a container of data.
     """
-    def __init__(self, slice, **kwargs):
+    def __init__(self, slice, kwargs):
         self.slice = slice
         for key in kwargs:
             setattr(self, key, kwargs[key])
@@ -40,6 +40,6 @@ class Event(object):
     """
     This class is a container of event.
     """
-    def __init__(self, **kwargs):
+    def __init__(self, kwargs):
         for key in kwargs:
             setattr(self, key, kwargs[key])

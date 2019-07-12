@@ -260,9 +260,11 @@ def run_quality_checks(data, checks, bounds):
 
     events_dict = {}
     for ck in checks:
+        print ('check', ck)
         function = function_mapper[ck]
         eval, args = function(data=data, bounds=bounds)
         if eval != E_IN_THRESHOLDS:
+            print ('event, args', args)
             events_dict[ck] = ut.Event(args)
 
     if len(events_dict) > 0:

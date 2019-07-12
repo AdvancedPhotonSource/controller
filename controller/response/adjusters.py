@@ -69,6 +69,30 @@ def Npix_oversat_cnt_rate_adj(**kws):
     # point saturation rate limit
 
 
+def Npix_undersat_cnt_rate_adj(**kws):
+    """
+    This method adjusts pv that affects saturation count rate.
+
+    Parameters
+    ----------
+    event : Event
+        Event instance containing rate value, and tuple with acquire time pv name and value
+    bounds : dict
+        dictionary of bounds, including target
+    Returns
+    -------
+    nothing
+    """
+    bounds = kws['bounds']
+    target = bounds['target']
+    event = kws['event']
+    rate = event.rate
+    acq_time_pair = event.acq_time
+
+    # find how many pixels have saturation rate (intensity divided by acquire time) exceeding the
+    # point saturation rate limit
+
+
 
 # maps the adjuster ID to the function object
 function_mapper = {

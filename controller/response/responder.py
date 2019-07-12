@@ -18,7 +18,7 @@ class Responder(Observer):
         """
         with open(config['bounds']) as file:
             self.bounds = json.loads(file.read())
-        self.adjust_time = config.adjust_time
+        self.adjust_time = float(config['adjust_time'])
         # adjusted dictionary holds events that happend no longer than adjust_time
         # during the adjustment time the events are ignored to allow the control loop delay
         # the dictionary values are the time the delay will expire expire
@@ -49,9 +49,11 @@ class Responder(Observer):
                 self.adjusted.pop(ev)
         new_events = {}
         for ev in events:
+            print ('ev', ev, type(ev))
             if not ev in self.adjusted:
                 self.adjusted[ev] = now + self.adjust_time
                 new_events[ev] = events[ev]
+
         return new_events
 
 
@@ -59,7 +61,9 @@ class Responder(Observer):
         """
         This function runs adjusters corresponding to events.
         """
-        events = args[0]
+        events = args[0][0]
+        print ('events1',events)
+        print(events, type(events))
         events = self.include_delay(events)
         aj.adjust(events, self.bounds)
 

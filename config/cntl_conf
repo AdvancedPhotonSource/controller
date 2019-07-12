@@ -5,7 +5,7 @@
 'time_zone' = 'America/Chicago'
 
 'feed' = pv
-'detector' = S12-PILATUS1
+'detector' = BBF1
 
 'adjust_time' = 5
 
