@@ -6,6 +6,7 @@ This file is a suite of control functions.
 """
 
 from epics import caput
+import math
 
 
 __author__ = "Barbara Frosik"
@@ -62,11 +63,15 @@ def Npix_oversat_cnt_rate_adj(**kws):
     bounds = kws['bounds']
     target = bounds['target']
     event = kws['event']
-    rate = event.rate
+    points_over_threshold = event.points_over_threshold
     acq_time_pair = event.acq_time
 
-    # find how many pixels have saturation rate (intensity divided by acquire time) exceeding the
-    # point saturation rate limit
+    # Too many points over saturation threshold
+    adjust = math.log(points_over_threshold/target)
+
+    new_ack_time = acq_time_pair[1] / adjust
+    print ('old acq_time, new_acq_time', acq_time_pair[1], new_ack_time)
+    caput(acq_time_pair[0], new_ack_time)
 
 
 def Npix_undersat_cnt_rate_adj(**kws):
@@ -86,11 +91,15 @@ def Npix_undersat_cnt_rate_adj(**kws):
     bounds = kws['bounds']
     target = bounds['target']
     event = kws['event']
-    rate = event.rate
+    points_over_threshold = event.points_over_threshold
     acq_time_pair = event.acq_time
 
-    # find how many pixels have saturation rate (intensity divided by acquire time) exceeding the
-    # point saturation rate limit
+    # Too little points over saturation threshold
+    adjust = math.log(target/points_over_threshold)
+
+    new_ack_time = acq_time_pair[1] / adjust
+    print ('old acq_time, new_acq_time', acq_time_pair[1], new_ack_time)
+    caput(acq_time_pair[0], new_ack_time)
 
 
 

@@ -166,15 +166,16 @@ def Npix_oversat_cnt_rate(**kws):
     # number point saturation rate limit
     eval = check_limit(points_over_hlimit, this_bounds)
     # if the result do not exceed limit, check the threshold
+    args = None
     if eval == E_IN_LIMITS:
-        points_over_hthreshold = (rate > sub_bounds['target']).sum()
-        eval = check_threshold(points_over_hthreshold, this_bounds)
-        if eval == E_IN_THRESHOLDS:
-            return eval, None
+        points_over_threshold = (rate > sub_bounds['target']).sum()
+        print ('point over thr', points_over_threshold)
+        eval = check_threshold(points_over_threshold, this_bounds)
+        if eval != E_IN_THRESHOLDS:
+            args = {}
+            args['points_over_threshold'] = points_over_threshold
+            args['ack_time'] = acq_time_pair
 
-    args = {}
-    args['rate'] = rate
-    args['ack_time'] = acq_time_pair
     return eval, args
 
 
@@ -215,15 +216,15 @@ def Npix_undersat_cnt_rate(**kws):
     # find if number of pixels with saturation rate (intensity divided by acquire time) over low limit is not enough
     eval = check_limit(points_over_llimit, this_bounds)
     # if the result do not exceed limit, check the threshold
+    args = None
     if eval == E_IN_LIMITS:
-        points_over_lthreshold = (rate > sub_bounds['target']).sum()
-        eval = check_threshold(points_over_lthreshold, this_bounds)
-        if eval == E_IN_THRESHOLDS:
-            return eval, None
+        points_over_threshold = (rate > sub_bounds['target']).sum()
+        eval = check_threshold(points_over_threshold, this_bounds)
+        if eval != E_IN_THRESHOLDS:
+            args = {}
+            args['points_over_threshold'] = points_over_threshold
+            args['ack_time'] = acq_time_pair
 
-    args = {}
-    args['rate'] = rate
-    args['ack_time'] = acq_time_pair
     return eval, args
 
 
